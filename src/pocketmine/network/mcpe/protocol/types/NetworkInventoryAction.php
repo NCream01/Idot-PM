@@ -191,6 +191,10 @@ class NetworkInventoryAction{
 					$window = $player->getWindow($this->windowId);
 					$slot = $this->inventorySlot;
 				}
+				if($this->windowId === self::SOURCE_TYPE_ANVIL_RESULT && $this->inventorySlot === 2){
+					$player->getInventory()->setItem($this->inventorySlot - 1, $this->newItem->getItemStack());
+					return new SlotChangeAction($window, $slot, $oldItem, $newItem);
+				}
 				if($window !== null){
 					return new SlotChangeAction($window, $slot, $oldItem, $newItem);
 				}
@@ -222,8 +226,13 @@ class NetworkInventoryAction{
 					case self::SOURCE_TYPE_CRAFTING_RESULT:
 					case self::SOURCE_TYPE_CRAFTING_USE_INGREDIENT:
 						return null;
+					case self::SOURCE_TYPE_ANVIL_RESULT:
+						$anvil = $player->getAnvil();
+						if($anvil !== null){
+							$anvil->onResult($player, $oldItem);
+						}
+						return null;
 				}
-
 				//TODO: more stuff
 				throw new \UnexpectedValueException("Player " . $player->getName() . " has no open container with window ID $this->windowId");
 			default:

@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace pocketmine\inventory;
 
+use pocketmine\item\Item;
 use pocketmine\level\Position;
 use pocketmine\network\mcpe\protocol\types\WindowTypes;
 use pocketmine\Player;
@@ -62,6 +63,11 @@ class AnvilInventory extends ContainerInventory{
 		foreach($this->getContents() as $item){
 			$who->dropItem($item);
 		}
+		$this->clearAll();
+	}
+
+	public function onResult(Player $player, Item $result){
+		$player->getInventory()->addItem($result);
 		$this->clearAll();
 	}
 }
