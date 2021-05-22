@@ -54,6 +54,8 @@ class NetworkInventoryAction{
 	public const SOURCE_TYPE_CRAFTING_RESULT = -4;
 	public const SOURCE_TYPE_CRAFTING_USE_INGREDIENT = -5;
 
+	public const SOURCE_TYPE_ANVIL_INPUT = -10;
+	public const SOURCE_TYPE_ANVIL_MATERIAL = -11;
 	public const SOURCE_TYPE_ANVIL_RESULT = -12;
 	public const SOURCE_TYPE_ANVIL_OUTPUT = -13;
 
@@ -167,7 +169,10 @@ class NetworkInventoryAction{
 					if($this->inventorySlot === UIInventorySlotOffset::CREATED_ITEM_OUTPUT){
 						return null; //useless noise
 					}
-					if(array_key_exists($this->inventorySlot, UIInventorySlotOffset::CRAFTING2X2_INPUT)){
+					if(array_key_exists($this->inventorySlot, UIInventorySlotOffset::ANVIL)){
+						$window = $player->getAnvil();
+						$slot = UIInventorySlotOffset::ANVIL[$this->inventorySlot];
+					}elseif(array_key_exists($this->inventorySlot, UIInventorySlotOffset::CRAFTING2X2_INPUT)){
 						$window = $player->getCraftingGrid();
 						if($window->getGridWidth() !== CraftingGrid::SIZE_SMALL){
 							throw new \UnexpectedValueException("Expected small crafting grid");

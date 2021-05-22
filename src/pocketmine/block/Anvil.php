@@ -28,6 +28,7 @@ use pocketmine\item\Item;
 use pocketmine\item\TieredTool;
 use pocketmine\math\AxisAlignedBB;
 use pocketmine\math\Vector3;
+use pocketmine\network\mcpe\protocol\FilterTextPacket;
 use pocketmine\Player;
 
 class Anvil extends Fallable{
@@ -101,7 +102,8 @@ class Anvil extends Fallable{
 
 	public function onActivate(Item $item, Player $player = null) : bool{
 		if($player instanceof Player){
-			$player->addWindow(new AnvilInventory($this));
+			$player->setAnvil(new AnvilInventory($this));
+			$player->addWindow($player->getAnvil());
 		}
 
 		return true;

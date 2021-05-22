@@ -70,6 +70,7 @@ use pocketmine\event\player\PlayerTransferEvent;
 use pocketmine\event\server\DataPacketSendEvent;
 use pocketmine\form\Form;
 use pocketmine\form\FormValidationException;
+use pocketmine\inventory\AnvilInventory;
 use pocketmine\inventory\CraftingGrid;
 use pocketmine\inventory\Inventory;
 use pocketmine\inventory\PlayerCursorInventory;
@@ -329,6 +330,8 @@ class Player extends Human implements CommandSender, ChunkLoader, IPlayer{
 	protected $cursorInventory;
 	/** @var CraftingGrid */
 	protected $craftingGrid;
+	/** @var AnvilInventory|null */
+	protected $anvil;
 	/** @var CraftingTransaction|null */
 	protected $craftingTransaction = null;
 
@@ -3961,6 +3964,14 @@ class Player extends Human implements CommandSender, ChunkLoader, IPlayer{
 
 	public function setCraftingGrid(CraftingGrid $grid) : void{
 		$this->craftingGrid = $grid;
+	}
+
+	public function setAnvil(?AnvilInventory $anvil) : void{
+		$this->anvil = $anvil;
+	}
+
+	public function getAnvil() : ?AnvilInventory{
+		return $this->anvil;
 	}
 
 	public function doCloseInventory() : void{

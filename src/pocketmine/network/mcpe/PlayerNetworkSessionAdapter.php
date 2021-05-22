@@ -39,6 +39,7 @@ use pocketmine\network\mcpe\protocol\CommandRequestPacket;
 use pocketmine\network\mcpe\protocol\ContainerClosePacket;
 use pocketmine\network\mcpe\protocol\CraftingEventPacket;
 use pocketmine\network\mcpe\protocol\DataPacket;
+use pocketmine\network\mcpe\protocol\FilterTextPacket;
 use pocketmine\network\mcpe\protocol\InteractPacket;
 use pocketmine\network\mcpe\protocol\InventoryTransactionPacket;
 use pocketmine\network\mcpe\protocol\ItemFrameDropItemPacket;
@@ -345,5 +346,10 @@ class PlayerNetworkSessionAdapter extends NetworkSession{
 			return true;
 		}
 		return false;
+	}
+
+	public function handleFilterText(FilterTextPacket $packet) : bool{
+		$this->player->dataPacket(FilterTextPacket::create($packet->getText(), true));
+		return true;
 	}
 }

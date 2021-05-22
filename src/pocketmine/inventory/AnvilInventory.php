@@ -58,7 +58,7 @@ class AnvilInventory extends ContainerInventory{
 
 	public function onClose(Player $who) : void{
 		parent::onClose($who);
-
+		$who->setAnvil(null);
 		foreach($this->getContents() as $item){
 			$who->dropItem($item);
 		}
